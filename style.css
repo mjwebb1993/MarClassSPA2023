@@ -67,6 +67,12 @@ footer {
   width: 25%;
 }
 
+#not-found {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+}
+
 @media (max-width: 549px){
   .hidden--mobile {
     display: none !important;
