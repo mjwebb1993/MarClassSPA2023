@@ -1,13 +1,20 @@
 import html from "html-literal";
 
-export default () => html`
+// constructing an HTML list of items from the array in Store
+//  - .map formats the array elements into html
+//      and constructs a new array from the results
+//  - .join joins the elements of the new array into one long string
+//  - data-navigo is a switch that allows Navigo to handle our page routing
+export default links => html`
   <nav>
     <i class="fas fa-bars"></i>
     <ul class="hidden--mobile nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bio.html">Bio</a></li>
-      <li><a href="pizza.html">Pizza</a></li>
-      <li><a href="order.html">Order</a></li>
+      ${links
+        .map(
+          link =>
+            `<li><a href="/${link.title}" title="${link.title}" data-navigo>${link.text}</a></li>`
+        )
+        .join("")}
     </ul>
   </nav>
 `;
