@@ -15,7 +15,9 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.3.1",
     "parcel": "^2.0.1",
+    "path-browserify": "^1.0.1",
     "prettier": "1.19.1",
+    "process": "^0.11.10",
     "yargs-parser": ">=13.1.2"
   },
   "dependencies": {
