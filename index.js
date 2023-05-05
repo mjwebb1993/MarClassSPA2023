@@ -1,17 +1,18 @@
-import { Header, Nav, Main, Footer } from "./components";
+import { header, nav, main, footer } from "./components";
 import * as store from "./store";
 import Navigo from "navigo";
-import { capitalize } from "lodash";
 import axios from "axios";
 
 const router = new Navigo("/");
 
-function render(state = store.Home) {
+function render(state = store.home) {
+  console.log("matsinet - state:", state);
+
   document.querySelector("#root").innerHTML = `
-    ${Header(state)}
-    ${Nav(store.Links)}
-    ${Main(state)}
-    ${Footer()}
+    ${header(state)}
+    ${nav(store.links)}
+    ${main(state)}
+    ${footer()}
   `;
 
   afterRender(state);
@@ -27,15 +28,15 @@ function afterRender(state) {
 }
 
 router.hooks({
-  before: (done, params) => {
+  before: (done, { data, params }) => {
     const view =
-      params && params.data && params.data.view
-        ? capitalize(params.data.view)
-        : "Home";
+      data && "view" in data
+        ? data.view.toLowerCase().replace("-", "")
+        : "home";
     // Add a switch case statement to handle multiple routes
     switch (view) {
       // New Case for the Home View
-      case "Home":
+      case "home":
         axios
           // Get request to retrieve the current weather data using the API key and providing a city name
           .get(
@@ -48,7 +49,7 @@ router.hooks({
               Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
 
             // Create an object to be stored in the Home state from the response
-            store.Home.weather = {
+            store.home.weather = {
               city: response.data.name,
               temp: kelvinToFahrenheit(response.data.main.temp),
               feelsLike: kelvinToFahrenheit(response.data.main.feels_like),
@@ -57,11 +58,11 @@ router.hooks({
 
             // An alternate method would be to store the values independently
             /*
-      store.Home.weather.city = response.data.name;
-      store.Home.weather.temp = kelvinToFahrenheit(response.data.main.temp);
-      store.Home.weather.feelsLike = kelvinToFahrenheit(response.data.main.feels_like);
-      store.Home.weather.description = response.data.weather[0].main;
-      */
+            store.Home.weather.city = response.data.name;
+            store.Home.weather.temp = kelvinToFahrenheit(response.data.main.temp);
+            store.Home.weather.feelsLike = kelvinToFahrenheit(response.data.main.feels_like);
+            store.Home.weather.description = response.data.weather[0].main;
+            */
             done();
           })
           .catch(err => {
@@ -69,14 +70,14 @@ router.hooks({
             done();
           });
         break;
-      case "Pizza":
+      case "pizza":
         // New Axios get request utilizing already made environment variable
         axios
           .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
           .then(response => {
             // We need to store the response to the state, in the next step but in the meantime let's see what it looks like so that we know what to store from the response.
             console.log("response", response);
-            store.Pizza.pizzas = response.data;
+            store.pizza.pizzas = response.data;
             done();
           })
           .catch(error => {
@@ -88,11 +89,11 @@ router.hooks({
         done();
     }
   },
-  already: params => {
+  already: ({ data, params }) => {
     const view =
-      params && params.data && params.data.view
-        ? capitalize(params.data.view)
-        : "Home";
+      data && "view" in data
+        ? data.view.toLowerCase().replace("-", "")
+        : "home";
 
     render(store[view]);
   }
@@ -101,8 +102,8 @@ router.hooks({
 router
   .on({
     "/": () => render(),
-    ":view": params => {
-      let view = capitalize(params.data.view);
+    ":view": ({ data, params }) => {
+      let view = data.view.toLowerCase().replace("-", "");
       if (view in store) {
         render(store[view]);
       } else {
