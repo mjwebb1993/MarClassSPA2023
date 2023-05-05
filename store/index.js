@@ -1,6 +1,6 @@
-export { default as Bio } from "./Bio";
-export { default as Home } from "./Home";
-export { default as Order } from "./Order";
-export { default as Pizza } from "./Pizza";
-export { default as Links } from "./Links";
-export { default as Viewnotfound } from "./Viewnotfound";
+export { default as about } from "./about";
+export { default as home } from "./home";
+export { default as order } from "./order";
+export { default as pizza } from "./pizza";
+export { default as links } from "./links";
+export { default as viewnotfound } from "./viewnotfound";
