@@ -10,10 +10,12 @@ export default links => html`
     <i class="fas fa-bars"></i>
     <ul class="hidden--mobile nav-links">
       ${links
-        .map(
-          link =>
-            `<li><a href="/${link.url}" title="${link.text}" data-navigo>${link.text}</a></li>`
-        )
+        .map(link => {
+          const external = link.url.includes("https");
+          return `<li><a href="${link.url}" title="${link.text}" ${
+            external ? 'target="_blank"' : "data-navigo"
+          }>${link.text}</a></li>`;
+        })
         .join("")}
     </ul>
   </nav>
