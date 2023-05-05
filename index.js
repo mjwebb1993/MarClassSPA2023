@@ -6,8 +6,6 @@ import axios from "axios";
 const router = new Navigo("/");
 
 function render(state = store.home) {
-  console.log("matsinet - state:", state);
-
   document.querySelector("#root").innerHTML = `
     ${header(state)}
     ${nav(store.links)}
@@ -67,6 +65,7 @@ function afterRender(state) {
 }
 
 router.hooks({
+  // Use object deconstruction to store the data and (query)params from the Navigo match parameter
   before: (done, { data, params }) => {
     const view =
       data && "view" in data
@@ -141,7 +140,9 @@ router.hooks({
 router
   .on({
     "/": () => render(),
+    // Use object deconstruction to store the data and (query)params from the Navigo match parameter
     ":view": ({ data, params }) => {
+      // Change the :view data element to lower case and remove any dashes (support for multi-word views)
       let view = data.view.toLowerCase().replace("-", "");
       if (view in store) {
         render(store[view]);
