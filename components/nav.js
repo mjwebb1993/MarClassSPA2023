@@ -11,10 +11,15 @@ export default links => html`
     <ul class="hidden--mobile nav-links">
       ${links
         .map(link => {
-          const external = link.url.includes("https");
-          return `<li><a href="${link.url}" title="${link.text}" ${
-            external ? 'target="_blank"' : "data-navigo"
-          }>${link.text}</a></li>`;
+          const linkAttribute = link.external
+            ? 'target="_blank"'
+            : "data-navigo";
+
+          return `<li>
+            <a href="${link.url}" title="${link.text}" ${linkAttribute}>
+              ${link.text}
+            </a>
+          </li>`;
         })
         .join("")}
     </ul>
