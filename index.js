@@ -139,7 +139,7 @@ router
         render(store[view]);
       } else {
         console.log(`View ${view} not defined`);
-        render(store.Viewnotfound);
+        render(store.viewNotFound);
       }
     }
   })
