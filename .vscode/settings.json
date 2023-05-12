@@ -1,7 +1,6 @@
 {
   "better-comments.highlightPlainText": true,
   "css.validate": false,
-  "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -14,9 +13,9 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "stylelint.enable": true,
-  "workbench.colorTheme": "Material Theme",
-  "workbench.enableExperiments": false,
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.view.alwaysShowHeaderActions": true
+  "workbench.view.alwaysShowHeaderActions": true,
+  "workbench.tree.indent": 20,
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#FFF"
+  },
 }

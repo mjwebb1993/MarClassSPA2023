@@ -2,6 +2,7 @@ import { header, nav, main, footer } from "./components";
 import * as store from "./store";
 import Navigo from "navigo";
 import axios from "axios";
+import { camelCase } from "lodash";
 
 const router = new Navigo("/");
 
@@ -28,10 +29,9 @@ function afterRender(state) {
 router.hooks({
   // Use object deconstruction to store the data and (query)params from the Navigo match parameter
   before: (done, { data, params }) => {
-    const view =
-      data && "view" in data
-        ? data.view.toLowerCase().replace("-", "")
-        : "home";
+    // Check if data is null, view property exists, if not set view equal to "home"
+    // using optional chaining (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
+    const view = data?.view ? camelCase(data.view) : "home";
     // Add a switch case statement to handle multiple routes
     switch (view) {
       // New Case for the Home View
@@ -81,10 +81,7 @@ router.hooks({
     }
   },
   already: ({ data, params }) => {
-    const view =
-      data && "view" in data
-        ? data.view.toLowerCase().replace("-", "")
-        : "home";
+    const view = data?.view ? camelCase(data.view) : "home";
 
     render(store[view]);
   }
@@ -93,10 +90,12 @@ router.hooks({
 router
   .on({
     "/": () => render(),
-    // Use object deconstruction to store the data and (query)params from the Navigo match parameter
+    // Use object destructuring assignment to store the data and (query)params from the Navigo match parameter
+    // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+    // This reduces the number of checks that need to be performed
     ":view": ({ data, params }) => {
-      // Change the :view data element to lower case and remove any dashes (support for multi-word views)
-      let view = data.view.toLowerCase().replace("-", "");
+      // Change the :view data element to camel case and remove any dashes (support for multi-word views)
+      const view = data?.view ? camelCase(data.view) : "home";
       if (view in store) {
         render(store[view]);
       } else {

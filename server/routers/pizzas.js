@@ -7,7 +7,9 @@ const router = Router();
 router.post("/", (request, response) => {
   const newPizza = new Pizza(request.body);
   newPizza.save((error, record) => {
-    if (error && "name" in error && error.name === "ValidationError")
+    // Check if error is null, name property exists and equals ValidationError
+    // using optional chaining (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
+    if (error?.name === "ValidationError")
       return response.status(400).json(error.errors);
     if (error) return response.status(500).json(error.errors);
 
