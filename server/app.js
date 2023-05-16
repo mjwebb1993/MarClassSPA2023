@@ -75,17 +75,16 @@ app.get("/status", (request, response) => {
 
 // Example of a "proxy route", example of calling a 3rd party API from your API
 app.get("/weather/:city", (request, response) => {
+  let url = `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=${request.params.city}`;
+
   axios
     // Get request to retrieve the current weather data using the API key and providing a city name
-    .get(
-      `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=${request.params.city}`
-    )
+    .get(url)
     .then(weatherData => {
-      console.log(weatherData);
       response.json(weatherData.data);
     })
-    .catch(err => {
-      console.log(err);
+    .catch(error => {
+      response.status(error.response.data.cod).json(error.response.data);
     });
 });
 
