@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const pizzas = require("./routers/pizzas");
+const axios = require("axios");
 
 // Initialize the Express application
 const app = express();
@@ -56,20 +57,35 @@ app.get("/status", (request, response) => {
   response.send(JSON.stringify({ message: "Service healthy" }));
 });
 
+// app.get("/weather/:city", (request, response) => {
+//   // Express adds a "params" Object to requests that has an matches parameter created using the colon syntax
+//   const city = request.params.city;
+//   const apiKey = request.query.apikey;
+//   // Generate a random number to use as the temperature
+//   // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values_inclusive
+//   const min = 70;
+//   const max = 90;
+//   const temp = Math.floor(Math.random() * (max - min + 1) + min);
+//   // handle GET request for weather with an route parameter of "city"
+//   response.status(418).json({
+//     current: `The weather in ${city} is ${temp} degrees today.`,
+//     apikey: apiKey
+//   });
+// });
+
 app.get("/weather/:city", (request, response) => {
-  // Express adds a "params" Object to requests that has an matches parameter created using the colon syntax
-  const city = request.params.city;
-  const apiKey = request.query.apikey;
-  // Generate a random number to use as the temperature
-  // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values_inclusive
-  const min = 70;
-  const max = 90;
-  const temp = Math.floor(Math.random() * (max - min + 1) + min);
-  // handle GET request for weather with an route parameter of "city"
-  response.status(418).json({
-    current: `The weather in ${city} is ${temp} degrees today.`,
-    apikey: apiKey
-  });
+  axios
+    // Get request to retrieve the current weather data using the API key and providing a city name
+    .get(
+      `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=${request.params.city}`
+    )
+    .then(weatherData => {
+      console.log(weatherData);
+      response.json(weatherData.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 app.post("/add", (request, response) => {
