@@ -73,6 +73,7 @@ app.get("/status", (request, response) => {
 //   });
 // });
 
+// Example of a "proxy route", example of calling a 3rd party API from your API
 app.get("/weather/:city", (request, response) => {
   axios
     // Get request to retrieve the current weather data using the API key and providing a city name
