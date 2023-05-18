@@ -17,5 +17,14 @@
     },
     "rules": {
         "no-unused-vars": "warn"
-    }
+    },
+    {
+        "prettier/prettier": [
+          "warn",
+          {
+            "parser": "flow",
+            "max-len": 120
+          }
+        ]
+      }
 }
