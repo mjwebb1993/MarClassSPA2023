@@ -1,6 +1,7 @@
 import html from "html-literal";
+import { kebabCase } from "lodash";
 
-export default () => html`
+export default state => html`
   <section id="order">
     <form id="order" method="POST" action="">
       <h2>Order a pizza</h2>
@@ -36,46 +37,16 @@ export default () => html`
       </div>
       <div>
         <label for="toppings">Toppings:</label>
-        <input
-          type="checkbox"
-          id="id_of_checkbox1"
-          class="items1"
-          name="toppings"
-          value="Chicken"
-        />
-        <label for="top1">chicken</label>
-        <input
-          type="checkbox"
-          id="id_of_checkbox2"
-          class="items1"
-          name="toppings"
-          value="onion"
-        />
-        <label for="top2">onion</label>
-        <input
-          type="checkbox"
-          id="id_of_checkbox3"
-          class="items1"
-          name="toppings"
-          value="spinach"
-        />
-        <label for="top3">spinach</label>
-        <input
-          type="checkbox"
-          id="id_of_checkbox4"
-          class="items1"
-          name="toppings"
-          value="Extra cheese"
-        />
-        <label for="top4">extra cheese</label>
-        <input
-          type="checkbox"
-          id="id_of_checkbox5"
-          class="items1"
-          name="toppings"
-          value="red pepper"
-        />
-        <label for="top5">red pepper</label>
+        ${state.availableToppings.map(topping => {
+          const id = kebabCase(topping) + `-checkbox`;
+          return html`<input
+            type="checkbox"
+            id="${id}"
+            name="toppings"
+            value="${topping}"
+          />
+          <label for="${id}" class="topping-label">${topping}</label>`
+        }).join("")}
       </div>
       <input
         type="hidden"

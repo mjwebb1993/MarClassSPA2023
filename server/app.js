@@ -22,8 +22,6 @@ db.once(
   console.log.bind(console, "Successfully opened connection to Mongo!")
 );
 
-// mongodb+srv://mattthomassavvy:F0rdtruck@cluster0.14kfgh8.mongodb.net/?retryWrites=true&w=majority
-
 // Logging Middleware
 const logging = (request, response, next) => {
   console.log(`${request.method} ${request.url} ${Date.now()}`);
@@ -56,22 +54,6 @@ app.get("/status", (request, response) => {
   // End and return the response
   response.send(JSON.stringify({ message: "Service healthy" }));
 });
-
-// app.get("/weather/:city", (request, response) => {
-//   // Express adds a "params" Object to requests that has an matches parameter created using the colon syntax
-//   const city = request.params.city;
-//   const apiKey = request.query.apikey;
-//   // Generate a random number to use as the temperature
-//   // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values_inclusive
-//   const min = 70;
-//   const max = 90;
-//   const temp = Math.floor(Math.random() * (max - min + 1) + min);
-//   // handle GET request for weather with an route parameter of "city"
-//   response.status(418).json({
-//     current: `The weather in ${city} is ${temp} degrees today.`,
-//     apikey: apiKey
-//   });
-// });
 
 // Example of a "proxy route", example of calling a 3rd party API from your API
 app.get("/weather/:city", (request, response) => {
