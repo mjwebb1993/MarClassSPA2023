@@ -1,4 +1,5 @@
 export default {
   header: "Order a pizza!",
-  view: "order"
+  view: "order",
+  availableToppings: ["Chicken", "Onion", "Spinach", "Extra Cheese", "Red Pepper", "Pepperoni"],
 };

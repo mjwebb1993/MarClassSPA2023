@@ -31,7 +31,11 @@ form > * {
   margin: 0.5rem;
 }
 
-form > input[type="submit"] {
+.topping-label {
+  margin-right: 0.25rem;
+}
+
+form input[type="submit"] {
   width: 40%;
   margin: 0.5rem;
   margin-right: auto;
