@@ -3,6 +3,3 @@ export default {
   view: "pizza",
   pizzas: []
 };
-
-
-// chicken  onion  spinach  extra cheese  red pepper
