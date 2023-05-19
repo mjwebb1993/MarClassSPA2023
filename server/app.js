@@ -22,8 +22,6 @@ db.once(
   console.log.bind(console, "Successfully opened connection to Mongo!")
 );
 
-// mongodb+srv://mattthomassavvy:F0rdtruck@cluster0.14kfgh8.mongodb.net/?retryWrites=true&w=majority
-
 // Logging Middleware
 const logging = (request, response, next) => {
   console.log(`${request.method} ${request.url} ${Date.now()}`);
