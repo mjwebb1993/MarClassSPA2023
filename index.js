@@ -25,7 +25,9 @@ function afterRender(state) {
     document.querySelector("nav > ul").classList.toggle("hidden--mobile");
   });
 
-  if (state.view === "Order") {
+  console.log('matsinet - state.view:', state.view);
+
+  if (state.view === "order") {
     document.querySelector("form").addEventListener("submit", event => {
       // Prevent the default action aka redirect to the same url using POST method
       event.preventDefault();
@@ -55,7 +57,7 @@ function afterRender(state) {
         .post(`${process.env.PIZZA_PLACE_API_URL}/pizzas`, requestData)
         .then(response => {
           // Push the new pizza onto the Pizza state pizzas attribute, so it can be displayed in the pizza list
-          store.Pizza.pizzas.push(response.data);
+          store.pizza.pizzas.push(response.data);
           router.navigate("/Pizza");
         })
         .catch(error => {
